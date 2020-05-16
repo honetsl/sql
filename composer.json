@@ -1,0 +1,20 @@
+{
+    "name": "liang/sql",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "honelst",
+            "email": "627349931@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dispirited\\": "src/Dispirited"
+        }
+    }
+}
