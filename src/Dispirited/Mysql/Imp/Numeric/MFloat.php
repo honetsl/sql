@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp;
+namespace Dispirited\Mysql\Imp\Numeric;
 
 
 class MFloat extends MDecimal

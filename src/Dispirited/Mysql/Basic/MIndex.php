@@ -7,10 +7,10 @@ namespace Dispirited\Mysql\Basic;
 use Dispirited\Basic\Index;
 
 /**
- * @method static Index PrimaryKey()
- * @method static Index UniqueKey()
- * @method static Index Index()
- * @method static Index FullText()
+ * @method static Index primaryKey()
+ * @method static Index unique()
+ * @method static Index index()
+ * @method static Index fulltext()
  * Class MIndex
  * @package Dispirited\Mysql\Basic
  */
@@ -20,6 +20,7 @@ final class MIndex implements Index
 
     private function __construct(string $name)
     {
+        $name = (string)preg_replace("/([A-Z])/", " " . strtolower('${1}'), $name);
         $this->_name = $name;
     }
 

@@ -1,21 +1,21 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp;
+namespace Dispirited\Mysql\Imp\Date;
 
 
 use Dispirited\Mysql\Basic\MField;
 
-class MVarchar extends MField
+class MDatetime extends MField
 {
-    protected string $_type = "varchar";
-
+    protected string $_type = "datetime";
     public function __toString(): string
     {
         $sql = implode(" ", [
             sprintf("`%s`", $this->_name),
-            sprintf("%s(%d)", $this->_type, $this->_length),
-            sprintf("default '%s'", $this->_default),
+            sprintf("%s(%d)",$this->_type, $this->_scale),
+            sprintf("default %s", strtoupper($this->_default) === "CURRENT_TIMESTAMP" ? "CURRENT_TIMESTAMP" : "'{$this->_default}'"),
+            sprintf("%s", $this->_onUpdate ? "on update current_timestamp" : ""),
             sprintf("%s", $this->_null),
             sprintf("comment '%s'", $this->_comment),
         ]);

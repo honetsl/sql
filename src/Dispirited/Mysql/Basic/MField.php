@@ -4,6 +4,8 @@
 namespace Dispirited\Mysql\Basic;
 
 
+use Dispirited\Basic\Charset;
+use Dispirited\Basic\Collate;
 use Dispirited\Basic\Field;
 use Dispirited\Basic\Index;
 
@@ -62,10 +64,21 @@ abstract class MField implements Field
     protected string $_type;
 
     /**
+     * 字符集
+     * @var Charset $_charset
+     */
+    protected ?Charset $_charset = null;
+
+    /**
      * 是否不要索引
      * @var bool $_filter
      */
     protected bool $_filter = false;
+
+    /**
+     * @var Collate $_collate
+     */
+    protected ?Collate $_collate;
 
     /**
      * MField constructor.
@@ -125,12 +138,24 @@ abstract class MField implements Field
         return $this->_name;
     }
 
+    public function charset(Charset $charset): Field
+    {
+        $this->_charset = $charset;
+        return $this;
+    }
+    public function collate(Collate $collate): Field
+    {
+        $this->_collate = $collate;
+        return $this;
+    }
+
+
     /**
      * @return string 表存在的时候进行字段的新增
      */
     public function alter(): string
     {
-        $this->filter = true;
+        $this->_filter = true;
         return
             sprintf("add COLUMN %s %s %s %s",
                 $this->__toString(),
@@ -143,6 +168,5 @@ abstract class MField implements Field
             );
     }
 
-    abstract public function __toString(): string;
 
 }

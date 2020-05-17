@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp;
+namespace Dispirited\Mysql\Imp\Date;
 
 
 class MTimeStamp extends MDatetime

@@ -1,14 +1,13 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp;
+namespace Dispirited\Mysql\Imp\String;
 
 
 use Dispirited\Mysql\Basic\MField;
 
-class MBlob extends MField
+class MTinyBlob extends MField
 {
-    protected string $_type = "blob";
     public function __toString(): string
     {
         $sql = implode(" ", [

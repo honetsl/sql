@@ -4,6 +4,8 @@
 namespace Dispirited\Mysql\Basic;
 
 
+use Dispirited\Basic\Charset;
+use Dispirited\Basic\Collate;
 use Dispirited\Basic\Engine;
 use Dispirited\Basic\Field;
 use Dispirited\Basic\Table;
@@ -14,6 +16,17 @@ final class MTable implements Table
     protected string $_name;
     private array $_fields;
     private string $_comment;
+
+    /**
+     * 字符集
+     * @var Charset $_charset
+     */
+    protected ?Charset $_charset = null;
+
+    /**
+     * @var Collate $_collate
+     */
+    protected ?Collate $_collate = null;
 
     public function __construct(string $name, Engine $engine)
     {
@@ -77,8 +90,26 @@ final class MTable implements Table
         return implode("\r\n", [
             sprintf("create table `%s` (", $this->_name),
             sprintf("%s", $sql),
-            sprintf(") engine %s", (string)$this->_engine),
-            $this->_comment ? sprintf("comment '%s'", $this->_comment) : ""
+            implode(" ", [
+                sprintf(") engine %s", (string)$this->_engine),
+                $this->_comment ? sprintf("comment '%s'", $this->_comment) : "",
+                is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
+                    (string)$this->_charset,
+                    !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
+                ),
+            ]),
         ]);
+    }
+
+    public function charset(Charset $charset): Table
+    {
+        $this->_charset = $charset;
+        return $this;
+    }
+
+    public function collate(Collate $collate): Table
+    {
+        $this->_collate = $collate;
+        return $this;
     }
 }
