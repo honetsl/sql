@@ -22,17 +22,26 @@ class MTinyInt extends MField
      * MTinyInt constructor.
      * @param string $name 字段名字
      * @param Index|null $index 索引
-     * @param bool $auto 是否自增
      * @param int $length 长度
-     * @param bool $zerofill 是否填充0
      */
-    public function __construct(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
+    public function __construct(string $name, ?Index $index = null, int $length = 11)
     {
         $this->_length = $length;
-        $this->_auto = $auto;
-        $this->_zerofill = $zerofill;
         parent::__construct($name, $index);
     }
+
+    public function auto(): MTinyInt
+    {
+        $this->_auto = true;
+        return $this;
+    }
+
+    public function zerofill():MTinyInt
+    {
+        $this->_zerofill = true;
+        return $this;
+    }
+
 
     public function __toString(): string
     {

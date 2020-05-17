@@ -11,11 +11,11 @@ use Dispirited\Basic\Index;
  *
  * @method static \Dispirited\Mysql\Basic\MTable Table(string $name, Engine $engine)
  *
- * @method static \Dispirited\Mysql\Imp\Numeric\MTinyInt TinyInt(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
- * @method static \Dispirited\Mysql\Imp\Numeric\MSmallInt SmallInt(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
- * @method static \Dispirited\Mysql\Imp\Numeric\MMediumInt MediumInt(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
- * @method static \Dispirited\Mysql\Imp\Numeric\MInt Int(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
- * @method static \Dispirited\Mysql\Imp\Numeric\MBigInt BigInt(string $name, ?Index $index = null, bool $auto = false, int $length = 11, bool $zerofill = false)
+ * @method static \Dispirited\Mysql\Imp\Numeric\MTinyInt TinyInt(string $name, ?Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Imp\Numeric\MSmallInt SmallInt(string $name, ?Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Imp\Numeric\MMediumInt MediumInt(string $name, ?Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Imp\Numeric\MInt Int(string $name, ?Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Imp\Numeric\MBigInt BigInt(string $name, ?Index $index = null, int $length = 11)
  *
  * @method static \Dispirited\Mysql\Imp\Numeric\MDecimal Decimal(string $name, ?Index $index = null)
  * @method static \Dispirited\Mysql\Imp\Numeric\MFloat  Float (string $name, ?Index $index = null)

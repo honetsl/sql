@@ -21,7 +21,7 @@ function test()
 //    )->comment("用户表");
 
     $table = Facade::Table("test1", MEngine::InnoDB())->add(
-        Facade::Int("id", MIndex::primaryKey(), true)->comment("主键id"),
+        Facade::Int("id", MIndex::primaryKey(), 11)->comment("主键id"),
         Facade::Varchar("name")->comment("名字")->length(128),
         Facade::Text("tdesc")->comment("详情text"),
         Facade::Blob("bdesc")->comment("详情blob"),
