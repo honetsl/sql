@@ -15,8 +15,8 @@ use Dispirited\Mysql\Basic\MField;
 class MTinyInt extends MField
 {
     protected string $_type = "tinyint";
-    protected bool $_zerofill;
-    protected bool $_auto;
+    protected bool $_zerofill = false;
+    protected bool $_auto = false;
 
     /**
      * MTinyInt constructor.

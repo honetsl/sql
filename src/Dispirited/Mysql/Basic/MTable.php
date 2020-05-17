@@ -9,6 +9,7 @@ use Dispirited\Basic\Collate;
 use Dispirited\Basic\Engine;
 use Dispirited\Basic\Field;
 use Dispirited\Basic\Table;
+use Dispirited\Mysql\Facade\Facade;
 
 final class MTable implements Table
 {
@@ -35,12 +36,32 @@ final class MTable implements Table
     }
 
 
-    public function add(Field $field, Field ...$args): Table
+    public function add(Field ...$args): Table
     {
-        array_unshift($args, $field);
         foreach ($args as $f) {
             $this->_fields[$f->getName()] = $f;
         }
+        return $this;
+    }
+
+    public function addBase(): Table
+    {
+        $this->add(
+            Facade::Int("id", MIndex::primaryKey(), 11)->auto()->comment("活动表的id"),
+            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        );
+        return $this;
+    }
+
+    public function addBaseWithDelete(): Table
+    {
+        $this->add(
+            Facade::Int("id", MIndex::primaryKey(), 11)->auto()->comment("活动表的id"),
+            Facade::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
+            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        );
         return $this;
     }
 
@@ -60,11 +81,11 @@ final class MTable implements Table
                  */
                 $f = $this->_fields[$item];
                 if (array_search($item, $keys) == 0) {
-                    $result[] = sprintf($f->alter(), $this->_name, "first", "");
+                    $result[] = sprintf($f->alter(), "first", "");
                 } else if (array_search($item, $keys) == count($keys) - 1) {
-                    $result[] = sprintf($f->alter(), $this->_name, "", "");
+                    $result[] = sprintf($f->alter(), "", "");
                 } else {
-                    $result[] = sprintf($f->alter(), $this->_name, "after", $keys[array_search($item, $keys) - 1]);
+                    $result[] = sprintf($f->alter(), "after", $keys[array_search($item, $keys) - 1]);
                 }
             }
             return $result;
