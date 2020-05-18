@@ -8,7 +8,7 @@ use Dispirited\Basic\Collate;
 
 /**
  * @link https://dev.mysql.com/doc/refman/8.0/en/Collate-Collates.html
- * 
+ *
  * @method static Collate armscii8_general_ci ()
  * @method static Collate ascii_general_ci()
  * @method static Collate big5_chinese_ci()

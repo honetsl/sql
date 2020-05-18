@@ -143,6 +143,7 @@ abstract class MField implements Field
         $this->_charset = $charset;
         return $this;
     }
+
     public function collate(Collate $collate): Field
     {
         $this->_collate = $collate;

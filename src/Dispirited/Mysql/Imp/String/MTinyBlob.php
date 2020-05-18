@@ -17,10 +17,10 @@ class MTinyBlob extends MField
             sprintf("comment '%s'", $this->_comment),
         ]);
 
-        if($this->_index !== null && !$this->_filter) {
-            $sql = implode(",",[
+        if ($this->_index !== null && !$this->_filter) {
+            $sql = implode(",", [
                 $sql,
-                sprintf("%s (`%s`)",(string)$this->_index,$this->_name)
+                sprintf("%s (`%s`)", (string)$this->_index, $this->_name)
             ]);
         }
         return $sql;

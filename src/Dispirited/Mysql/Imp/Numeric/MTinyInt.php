@@ -36,7 +36,7 @@ class MTinyInt extends MField
         return $this;
     }
 
-    public function zerofill():MTinyInt
+    public function zerofill(): MTinyInt
     {
         $this->_zerofill = true;
         return $this;

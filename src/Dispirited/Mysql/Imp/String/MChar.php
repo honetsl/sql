@@ -9,6 +9,7 @@ use Dispirited\Mysql\Basic\MField;
 class MChar extends MField
 {
     protected string $_type = "char";
+
     public function __toString(): string
     {
         $sql = implode(" ", [
@@ -19,7 +20,7 @@ class MChar extends MField
             sprintf("comment '%s'", $this->_comment),
             is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
                 (string)$this->_charset,
-                !is_null($this->_collate)?sprintf("COLLATE %s",$this->_collate):""
+                !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
             ),
         ]);
 
