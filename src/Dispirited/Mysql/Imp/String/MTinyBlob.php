@@ -8,6 +8,8 @@ use Dispirited\Mysql\Basic\MField;
 
 class MTinyBlob extends MField
 {
+    protected string $_type = "tinyblob";
+
     public function __toString(): string
     {
         $sql = implode(" ", [
