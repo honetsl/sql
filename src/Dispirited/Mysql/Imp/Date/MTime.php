@@ -8,7 +8,7 @@ use Dispirited\Mysql\Basic\MField;
 
 class MTime extends MField
 {
-    protected string $_type = "time";
+    protected $_type = "time";
 
     public function __toString(): string
     {

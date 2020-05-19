@@ -21,6 +21,8 @@ class MVarcharTest extends TestCase
 
     public function testTable()
     {
+        $table = Facade::Table("xxx",1);
+
         $table = Facade::Table("test1", MEngine::InnoDB())->add(
             Facade::Int("id", MIndex::primaryKey(), 11)->comment("主键id"),
             Facade::Varchar("name")->comment("名字")->length(128),

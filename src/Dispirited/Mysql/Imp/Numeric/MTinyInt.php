@@ -14,9 +14,10 @@ use Dispirited\Mysql\Basic\MField;
  */
 class MTinyInt extends MField
 {
-    protected string $_type = "tinyint";
-    protected bool $_zerofill = false;
-    protected bool $_auto = false;
+
+    protected $_type = "tinyint";
+    protected $_zerofill = false;
+    protected $_auto = false;
 
     /**
      * MTinyInt constructor.
@@ -24,7 +25,7 @@ class MTinyInt extends MField
      * @param Index|null $index 索引
      * @param int $length 长度
      */
-    public function __construct(string $name, ?Index $index = null, int $length = 11)
+    public function __construct(string $name, $index = null, int $length = 11)
     {
         $this->_length = $length;
         parent::__construct($name, $index);

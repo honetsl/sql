@@ -6,5 +6,5 @@ namespace Dispirited\Mysql\Imp\Numeric;
 
 class MBigInt extends MTinyInt
 {
-    protected string $_type = "bigint";
+    protected $_type = "bigint";
 }

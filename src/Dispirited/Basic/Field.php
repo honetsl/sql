@@ -6,7 +6,12 @@ namespace Dispirited\Basic;
 
 interface Field
 {
-    public function __construct(string $name, ?Index $index = null);
+    /**
+     * Field constructor.
+     * @param string $name
+     * @param Index|null $index
+     */
+    public function __construct(string $name, $index = null);
 
     public function default($value): Field;
 
@@ -22,9 +27,17 @@ interface Field
 
     public function unsigned(): Field;
 
-    public function charset(Charset $charset): Field;
+    /**
+     * @param Charset $charset
+     * @return Field
+     */
+    public function charset($charset): Field;
 
-    public function collate(Collate $collate): Field;
+    /**
+     * @param Collate $collate
+     * @return Field
+     */
+    public function collate($collate): Field;
 
     public function alter();
 

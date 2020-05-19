@@ -13,7 +13,7 @@ use Dispirited\Mysql\Basic\MField;
  */
 class MDecimal extends MField
 {
-    protected string $_type = "decimal";
+    protected $_type = "decimal";
 
     public function __toString(): string
     {

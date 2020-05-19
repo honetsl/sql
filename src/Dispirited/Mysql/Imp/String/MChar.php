@@ -8,7 +8,7 @@ use Dispirited\Mysql\Basic\MField;
 
 class MChar extends MField
 {
-    protected string $_type = "char";
+    protected $_type = "char";
 
     public function __toString(): string
     {

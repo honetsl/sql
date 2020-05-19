@@ -8,7 +8,7 @@ use Dispirited\Mysql\Basic\MField;
 
 class MTinyText extends MField
 {
-    protected string $_type = "tinytext";
+    protected $_type = "tinytext";
 
     public function __toString(): string
     {
