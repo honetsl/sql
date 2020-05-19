@@ -16,7 +16,10 @@ use Dispirited\Basic\Index;
  */
 final class MIndex implements Index
 {
-    private string $_name;
+    /**
+     * @var string $_name
+     */
+    private  $_name;
 
     private function __construct(string $name)
     {

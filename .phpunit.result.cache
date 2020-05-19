@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":273:{a:2:{s:7:"defects";a:3:{s:7:"Warning";i:6;s:25:"MVarcharTest::testVarchar";i:4;s:23:"MVarcharTest::testTable";i:4;}s:5:"times";a:4:{s:7:"Warning";d:0.007;s:25:"MVarcharTest::testVarchar";d:0.006;s:23:"MVarcharTest::testTable";d:0.005;s:21:"MVarcharTest::testAll";d:0.009;}}}

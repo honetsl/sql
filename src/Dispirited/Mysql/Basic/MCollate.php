@@ -55,7 +55,11 @@ use Dispirited\Basic\Collate;
  */
 class MCollate implements Collate
 {
-    private string $_name;
+
+    /**
+     * @var string $_name
+     */
+    private  $_name;
 
     private function __construct(string $name)
     {

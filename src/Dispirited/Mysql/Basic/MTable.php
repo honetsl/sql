@@ -13,21 +13,36 @@ use Dispirited\Mysql\Facades\Facade;
 
 final class MTable implements Table
 {
-    protected Engine $_engine;
-    protected string $_name;
-    private array $_fields;
-    private string $_comment;
+    /**
+     * @var Engine $_engine
+     */
+    protected  $_engine;
+
+    /**
+     * @var string $_name
+     */
+    protected  $_name;
+
+    /**
+     * @var array $_fields
+     */
+    private  $_fields;
+
+    /**
+     * @var string $_comment
+     */
+    private  $_comment;
 
     /**
      * 字符集
      * @var Charset $_charset
      */
-    protected ?Charset $_charset = null;
+    protected  $_charset = null;
 
     /**
      * @var Collate $_collate
      */
-    protected ?Collate $_collate = null;
+    protected  $_collate = null;
 
     public function __construct(string $name, Engine $engine)
     {

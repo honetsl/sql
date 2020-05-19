@@ -14,7 +14,10 @@ use Dispirited\Basic\Engine;
  */
 class MEngine implements Engine
 {
-    private string $_name;
+    /**
+     * @var string $_name
+     */
+    private $_name;
 
     private function __construct(string $name)
     {
