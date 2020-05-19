@@ -5,7 +5,7 @@ use Dispirited\Mysql\Basic\MCharset;
 use Dispirited\Mysql\Basic\MCollate;
 use Dispirited\Mysql\Basic\MEngine;
 use Dispirited\Mysql\Basic\MIndex;
-use Dispirited\Mysql\Facade\Facade;
+use Dispirited\Mysql\Facades\Facade;
 
 require "./vendor/autoload.php";
 echo "<pre>";

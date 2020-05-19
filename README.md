@@ -26,20 +26,20 @@ composer require hone1st/sql
 */
 
 // 不支持毫秒级
-Dispirited\Mysql\Facade\Facade::Date("");
+Dispirited\Mysql\Facades\Facade::Date("");
 
 // 支持scale精准度毫秒级几位
-Dispirited\Mysql\Facade\Facade::Time("");
+Dispirited\Mysql\Facades\Facade::Time("");
 
 // 支持显示2位或者4四位 需要确定scale 默认为4
 // 不支持毫秒级
-Dispirited\Mysql\Facade\Facade::Year("");
+Dispirited\Mysql\Facades\Facade::Year("");
 
 // 支持scale精准度毫秒级几位
 // 支持onupdate 默认更新为最新时间
 // 支持defalut('current_timestamp')
-Dispirited\Mysql\Facade\Facade::Datetime("");
-Dispirited\Mysql\Facade\Facade::TimeStamp("");
+Dispirited\Mysql\Facades\Facade::Datetime("");
+Dispirited\Mysql\Facades\Facade::TimeStamp("");
 ```
 
 #### 数字类型number
@@ -57,10 +57,10 @@ Dispirited\Mysql\Facade\Facade::TimeStamp("");
 */
 
 // 整数类型 默认长度都是11 得自己重新设置length
-Dispirited\Mysql\Facade\Facade::TinyInt("TinyInt")->length(1)->comment("TinyInt");
+Dispirited\Mysql\Facades\Facade::TinyInt("TinyInt")->length(1)->comment("TinyInt");
 
 // 浮点数类型可以设置scale 精准度保留多少位
-Dispirited\Mysql\Facade\Facade::Decimal("MDecimal")->length(10)->scale(2)->comment("MDecimal");
+Dispirited\Mysql\Facades\Facade::Decimal("MDecimal")->length(10)->scale(2)->comment("MDecimal");
 ```
 
 #### Text类型 暂不支持索引 

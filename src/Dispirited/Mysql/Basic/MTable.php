@@ -9,7 +9,7 @@ use Dispirited\Basic\Collate;
 use Dispirited\Basic\Engine;
 use Dispirited\Basic\Field;
 use Dispirited\Basic\Table;
-use Dispirited\Mysql\Facade\Facade;
+use Dispirited\Mysql\Facades\Facade;
 
 final class MTable implements Table
 {

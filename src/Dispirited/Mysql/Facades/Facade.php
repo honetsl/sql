@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Facade;
+namespace Dispirited\Mysql\Facades;
 
 use Dispirited\Basic\Engine;
 use Dispirited\Basic\Index;
@@ -41,7 +41,7 @@ use Dispirited\Basic\Index;
  * @method static \Dispirited\Mysql\Imp\Date\MTimeStamp TimeStamp(string $name, ?Index $index = null)
  * @method static \Dispirited\Mysql\Imp\Date\MYear Year(string $name, ?Index $index = null)
  * Class Facade
- * @package Dispirited\Mysql\Facade
+ * @package Dispirited\Mysql\Facades
  */
 class Facade
 {
