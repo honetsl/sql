@@ -16,33 +16,33 @@ final class MTable implements Table
     /**
      * @var Engine $_engine
      */
-    protected  $_engine;
+    protected $_engine;
 
     /**
      * @var string $_name
      */
-    protected  $_name;
+    protected $_name;
 
     /**
      * @var array $_fields
      */
-    private  $_fields;
+    private $_fields;
 
     /**
      * @var string $_comment
      */
-    private  $_comment;
+    private $_comment;
 
     /**
      * 字符集
      * @var Charset $_charset
      */
-    protected  $_charset = null;
+    protected $_charset = null;
 
     /**
      * @var Collate $_collate
      */
-    protected  $_collate = null;
+    protected $_collate = null;
 
     public function __construct(string $name, Engine $engine)
     {
@@ -124,7 +124,7 @@ final class MTable implements Table
                 $result = $item;
             }
             return $result;
-        },);
+        }, []);
 
         return implode("\r\n", [
             sprintf("create table `%s` (", $this->_name),
