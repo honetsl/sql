@@ -15,7 +15,7 @@ abstract class MField implements Field
      * 无符号
      * @var bool $_unsigned
      */
-    protected  $_unsigned = false;
+    protected $_unsigned = false;
     /**
      * 默认值
      * @var string|int $_default
@@ -25,38 +25,38 @@ abstract class MField implements Field
      * 长度
      * @var int $_length
      */
-    protected  $_length = 0;
+    protected $_length = 0;
 
     /**
      * 备注
      * @var string $_comment
      */
-    protected  $_comment = "";
+    protected $_comment = "";
     /**
      * 精准度
      * @var int $_scale
      */
-    protected  $_scale = 0;
+    protected $_scale = 0;
     /**
      * 是否自动更新时间
      * @var bool $_onUpdate
      */
-    protected  $_onUpdate = false;
+    protected $_onUpdate = false;
     /**
      * 是否为空
      * @var string $_null
      */
-    protected  $_null = "not null";
+    protected $_null = "not null";
     /**
      * 字段索引
      * @var Index|null $_index
      */
-    protected  $_index;
+    protected $_index;
     /**
      * 字段名字
      * @var string $_name
      */
-    protected  $_name;
+    protected $_name;
     /**
      * 字段类型
      * @var string $_type
@@ -67,25 +67,25 @@ abstract class MField implements Field
      * 字符集
      * @var Charset $_charset
      */
-    protected  $_charset = null;
+    protected $_charset = null;
 
     /**
      * 是否不要索引
      * @var bool $_filter
      */
-    protected  $_filter = false;
+    protected $_filter = false;
 
     /**
      * @var Collate $_collate
      */
-    protected  $_collate;
+    protected $_collate;
 
     /**
      * MField constructor.
      * @param string $name 字段名字
      * @param Index|null $index 字段索引
      */
-    public function __construct(string $name, $index = null)
+    public function __construct(string $name, Index $index = null)
     {
         $this->_name = $name;
         $this->_index = $index;

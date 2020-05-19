@@ -25,7 +25,7 @@ class MTinyInt extends MField
      * @param Index|null $index 索引
      * @param int $length 长度
      */
-    public function __construct(string $name, $index = null, int $length = 11)
+    public function __construct(string $name, Index $index = null, int $length = 11)
     {
         $this->_length = $length;
         parent::__construct($name, $index);

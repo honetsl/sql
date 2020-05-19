@@ -11,7 +11,7 @@ interface Field
      * @param string $name
      * @param Index|null $index
      */
-    public function __construct(string $name, $index = null);
+    public function __construct(string $name,Index $index = null);
 
     public function default($value): Field;
 
