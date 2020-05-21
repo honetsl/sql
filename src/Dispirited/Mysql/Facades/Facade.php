@@ -48,16 +48,16 @@ class Facade
     public static function __callStatic($name, $arguments)
     {
         switch ($name) {
-            case strtolower($name) != str_replace(["table"], "", strtolower($name)):
+            case strtolower($name) !== str_replace(["table"], "", strtolower($name)):
                 $name = "Dispirited\Mysql\Basic\M" . $name;
                 break;
-            case strtolower($name) != str_replace(["int", "float", "decimal", "double"], "", strtolower($name)):
+            case strtolower($name) !== str_replace(["int", "float", "decimal", "double"], "", strtolower($name)):
                 $name = "Dispirited\Mysql\Imp\Numeric\M" . $name;
                 break;
-            case strtolower($name) != str_replace(["char", "text", "blob"], "", strtolower($name)):
+            case strtolower($name) !== str_replace(["char", "text", "blob"], "", strtolower($name)):
                 $name = "\Dispirited\Mysql\Imp\String\M" . $name;
                 break;
-            case strtolower($name) != str_replace(["date", "time", "year"], "", strtolower($name)):
+            case strtolower($name) !== str_replace(["date", "time", "year"], "", strtolower($name)):
                 $name = "\Dispirited\Mysql\Imp\Date\M" . $name;
                 break;
         }

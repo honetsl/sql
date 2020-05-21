@@ -28,6 +28,8 @@ interface Table
      */
     public function collate(Collate $collate): Table;
 
+    public function dropIfExist(): string ;
+
     public function filter(string ...$args);
 
     public function __toString();

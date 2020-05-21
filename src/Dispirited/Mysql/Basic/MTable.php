@@ -62,21 +62,30 @@ final class MTable implements Table
         return $this;
     }
 
-    public function addBase(): Table
+    public function addBase(string $id = "id", string $comment = "主键id"): Table
     {
         $this->add(
-            Facade::Int("id", MIndex::primaryKey(), 11)->auto()->comment("活动表的id"),
+            Facade::Int($id, MIndex::primaryKey(), 11)->auto()->comment($comment),
             Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
             Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
-    public function addBaseWithDelete(): Table
+    public function addBaseWithDelete(string $id = "id", string $comment = "主键id"): Table
     {
         $this->add(
-            Facade::Int("id", MIndex::primaryKey(), 11)->auto()->comment("活动表的id"),
+            Facade::Int($id, MIndex::primaryKey(), 11)->auto()->comment($comment),
             Facade::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
+            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        );
+        return $this;
+    }
+
+    public function addTimestamp(): Table
+    {
+        $this->add(
             Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
             Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
@@ -158,5 +167,13 @@ final class MTable implements Table
     {
         $this->_collate = $collate;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function dropIfExist(): string
+    {
+        return sprintf("drop table  if exists %s", $this->_name);
     }
 }
