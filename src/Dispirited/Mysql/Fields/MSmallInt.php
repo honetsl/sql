@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\Numeric;
+namespace Dispirited\Mysql\Fields;
 
 
 class MSmallInt extends MTinyInt

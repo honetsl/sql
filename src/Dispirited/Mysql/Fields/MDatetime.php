@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\Date;
+namespace Dispirited\Mysql\Fields;
 
 
 use Dispirited\Mysql\Basic\MField;
@@ -20,13 +20,6 @@ class MDatetime extends MField
             sprintf("%s", $this->_null),
             sprintf("comment '%s'", $this->_comment),
         ]);
-
-        if (!is_null($this->_index) && !$this->_filter) {
-            $sql = implode(",", [
-                $sql,
-                sprintf("%s (`%s`)", (string)$this->_index, $this->_name)
-            ]);
-        }
-        return $sql;
+        return !is_null($this->_index) && !$this->_filter ? implode(",", [$sql, $this->indexToS()]) : $sql;
     }
 }

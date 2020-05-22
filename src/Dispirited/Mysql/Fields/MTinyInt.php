@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\Numeric;
+namespace Dispirited\Mysql\Fields;
 
 
 use Dispirited\Basic\Index;
@@ -10,7 +10,7 @@ use Dispirited\Mysql\Basic\MField;
 /**
  * @link https://dev.mysql.com/doc/refman/8.0/en/integer-types.html
  * Class MTinyInt
- * @package Dispirited\Mysql\Imp
+ * @package Dispirited\Mysql\Fields
  */
 class MTinyInt extends MField
 {
@@ -23,11 +23,11 @@ class MTinyInt extends MField
      * MTinyInt constructor.
      * @param string $name 字段名字
      * @param Index|null $index 索引
-     * @param int $length 长度
+     * Integer display width is deprecated and will be removed in a future release
+     * int $length 长度
      */
-    public function __construct(string $name, Index $index = null, int $length = 11)
+    public function __construct(string $name, Index $index = null)
     {
-        $this->_length = $length;
         parent::__construct($name, $index);
     }
 
@@ -50,7 +50,10 @@ class MTinyInt extends MField
             // 字段名字
             sprintf("`%s`", $this->_name),
             // 长度和是否无符号和类型
-            sprintf("%s %s(%d)", $this->_unsigned && !$this->_zerofill ? "unsigned " : "", $this->_type, $this->_length),
+            sprintf("%s %s",
+                $this->_unsigned && !$this->_zerofill ? "unsigned " : "",
+                $this->_type
+            ),
             // 是否自动填充0
             $this->_zerofill ? "zerofill" : "",
             // 默认值 自增则没有默认值
@@ -68,12 +71,6 @@ class MTinyInt extends MField
             sprintf("%s", $this->_auto ? "auto_increment" : "")
         ]);
 
-        if (!is_null($this->_index) && !$this->_filter) {
-            $sql = implode(",", [
-                $sql,
-                sprintf("%s (`%s`)", (string)$this->_index, $this->_name)
-            ]);
-        }
-        return $sql;
+        return !is_null($this->_index) && !$this->_filter ? implode(",", [$sql, $this->indexToS()]) : $sql;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\String;
+namespace Dispirited\Mysql\Fields;
 
 
 use Dispirited\Mysql\Basic\MField;
@@ -23,13 +23,7 @@ class MChar extends MField
                 !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
             ),
         ]);
-
-        if (!is_null($this->_index) && !$this->_filter) {
-            $sql = implode(",", [
-                $sql,
-                sprintf("%s (`%s`)", (string)$this->_index, $this->_name)
-            ]);
-        }
-        return $sql;
+        
+        return !is_null($this->_index) && !$this->_filter ? implode(",", [$sql, $this->indexToS()]) : $sql;
     }
 }

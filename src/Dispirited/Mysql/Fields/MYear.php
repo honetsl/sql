@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\Date;
+namespace Dispirited\Mysql\Fields;
 
 
 class MYear extends MTime
 {
     protected $_type = "year";
-    protected int $_scale = 4;
+    protected $_scale = 4;
 }

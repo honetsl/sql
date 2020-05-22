@@ -28,49 +28,49 @@ composer require hone1st/sql
 ```php
 // 传入字段名字和索引类型（可为空）
 /**
- * @method static \Dispirited\Mysql\Imp\Date\MDatetime Datetime(string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Date\MDate Date(string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Date\MTime Time(string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Date\MTimeStamp TimeStamp(string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Date\MYear Year(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MDatetime Datetime(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MDate Date(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MTime Time(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MTimeStamp TimeStamp(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MYear Year(string $name, ?Dispirited\Basic\Index $index = null)
 */
 
 // 不支持毫秒级
-Dispirited\Mysql\Facades\Facade::Date("");
+Dispirited\Mysql\Factorys\Facade::Date("");
 
 // 支持scale精准度毫秒级几位
-Dispirited\Mysql\Facades\Facade::Time("");
+Dispirited\Mysql\Factorys\Facade::Time("");
 
 // 支持显示2位或者4四位 需要确定scale 默认为4
 // 不支持毫秒级
-Dispirited\Mysql\Facades\Facade::Year("");
+Dispirited\Mysql\Factorys\Facade::Year("");
 
 // 支持scale精准度毫秒级几位
 // 支持onupdate 默认更新为最新时间
 // 支持defalut('current_timestamp')
-Dispirited\Mysql\Facades\Facade::Datetime("");
-Dispirited\Mysql\Facades\Facade::TimeStamp("");
+Dispirited\Mysql\Factorys\Facade::Datetime("");
+Dispirited\Mysql\Factorys\Facade::TimeStamp("");
 ```
 
 #### 数字类型number
 ```PHP
 /**
- * @method static \Dispirited\Mysql\Imp\Numeric\MTinyInt TinyInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
- * @method static \Dispirited\Mysql\Imp\Numeric\MSmallInt SmallInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
- * @method static \Dispirited\Mysql\Imp\Numeric\MMediumInt MediumInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
- * @method static \Dispirited\Mysql\Imp\Numeric\MInt Int(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
- * @method static \Dispirited\Mysql\Imp\Numeric\MBigInt BigInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Fields\MTinyInt TinyInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Fields\MSmallInt SmallInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Fields\MMediumInt MediumInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Fields\MInt Int(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
+ * @method static \Dispirited\Mysql\Fields\MBigInt BigInt(string $name, ?Dispirited\Basic\Index $index = null, int $length = 11)
  *
- * @method static \Dispirited\Mysql\Imp\Numeric\MDecimal Decimal(string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Numeric\MFloat  Float (string $name, ?Dispirited\Basic\Index $index = null)
- * @method static \Dispirited\Mysql\Imp\Numeric\MDouble   Double  (string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MDecimal Decimal(string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MFloat  Float (string $name, ?Dispirited\Basic\Index $index = null)
+ * @method static \Dispirited\Mysql\Fields\MDouble   Double  (string $name, ?Dispirited\Basic\Index $index = null)
 */
 
 // 整数类型 默认长度都是11 得自己重新设置length
-Dispirited\Mysql\Facades\Facade::TinyInt("TinyInt")->length(1)->comment("TinyInt");
+Dispirited\Mysql\Factorys\Facade::TinyInt("TinyInt")->length(1)->comment("TinyInt");
 
 // 浮点数类型可以设置scale 精准度保留多少位
-Dispirited\Mysql\Facades\Facade::Decimal("MDecimal")->length(10)->scale(2)->comment("MDecimal");
+Dispirited\Mysql\Factorys\Facade::Decimal("MDecimal")->length(10)->scale(2)->comment("MDecimal");
 ```
 
 #### Text类型 暂不支持索引 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\String;
+namespace Dispirited\Mysql\Fields;
 
 
 class MMediumText extends MTinyText

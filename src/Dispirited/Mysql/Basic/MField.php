@@ -183,4 +183,9 @@ abstract class MField implements Field
     }
 
 
+    protected function indexToS()
+    {
+        return sprintf("%s (`%s`)", (string)$this->_index, $this->_name);
+    }
+
 }

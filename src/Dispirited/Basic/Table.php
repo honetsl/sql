@@ -12,7 +12,7 @@ interface Table
      * @param Field ...$field
      * @return Table
      */
-    public function add(Field ...$field): Table;
+    public function addFields(Field ...$field): Table;
 
     public function comment(string $comment): Table;
 
@@ -28,9 +28,11 @@ interface Table
      */
     public function collate(Collate $collate): Table;
 
-    public function dropIfExist(): string ;
+    public function dropIfExist(): string;
 
     public function filter(string ...$args);
+
+    public function addMultiIndex(Index $index, string $name, string ...$fields): Table;
 
     public function __toString();
 }

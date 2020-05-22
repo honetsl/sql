@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dispirited\Mysql\Imp\Numeric;
+namespace Dispirited\Mysql\Fields;
 
 
 use Dispirited\Mysql\Basic\MField;
@@ -9,7 +9,7 @@ use Dispirited\Mysql\Basic\MField;
 /**
  * @link  https://dev.mysql.com/doc/refman/8.0/en/fixed-point-types.html
  * Class MDecimal
- * @package Dispirited\Mysql\Imp
+ * @package Dispirited\Mysql\Fields
  */
 class MDecimal extends MField
 {
@@ -28,13 +28,6 @@ class MDecimal extends MField
                 !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
             ),
         ]);
-
-        if (!is_null($this->_index) && !$this->_filter) {
-            $sql = implode(",", [
-                $sql,
-                sprintf("%s (`%s`)", (string)$this->_index, $this->_name)
-            ]);
-        }
-        return $sql;
+        return !is_null($this->_index) && !$this->_filter ? implode(",", [$sql, $this->indexToS()]) : $sql;
     }
 }

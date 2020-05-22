@@ -8,8 +8,9 @@ use Dispirited\Basic\Charset;
 use Dispirited\Basic\Collate;
 use Dispirited\Basic\Engine;
 use Dispirited\Basic\Field;
+use Dispirited\Basic\Index;
 use Dispirited\Basic\Table;
-use Dispirited\Mysql\Facades\Facade;
+use Dispirited\Mysql\Factory;
 
 final class MTable implements Table
 {
@@ -54,7 +55,7 @@ final class MTable implements Table
      * @param Field ...$args
      * @return $this|Table
      */
-    public function add(Field ...$args): Table
+    public function addFields(Field ...$args): Table
     {
         foreach ($args as $f) {
             $this->_fields[$f->getName()] = $f;
@@ -62,32 +63,32 @@ final class MTable implements Table
         return $this;
     }
 
-    public function addBase(string $id = "id", string $comment = "主键id"): Table
+    public function addIdTimestamp(string $id = "id", string $comment = "主键id"): Table
     {
-        $this->add(
-            Facade::Int($id, MIndex::primaryKey(), 11)->auto()->comment($comment),
-            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        $this->addFields(
+            Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
+            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
-    public function addBaseWithDelete(string $id = "id", string $comment = "主键id"): Table
+    public function addIdDelTimestamp(string $id = "id", string $comment = "主键id"): Table
     {
-        $this->add(
-            Facade::Int($id, MIndex::primaryKey(), 11)->auto()->comment($comment),
-            Facade::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
-            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        $this->addFields(
+            Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
+            Factory::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
+            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
     public function addTimestamp(): Table
     {
-        $this->add(
-            Facade::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Facade::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+        $this->addFields(
+            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
@@ -102,17 +103,17 @@ final class MTable implements Table
     {
         $keys = array_keys($this->_fields);
         $result = array_reduce($keys, function ($result, $item) use ($args, $keys) {
-            if (!in_array($item, $args)) {
+            if (!in_array($item, $args, true)) {
                 /**
                  * @var $f Field
                  */
                 $f = $this->_fields[$item];
-                if (array_search($item, $keys) == 0) {
+                if (array_search($item, $keys, true) === 0) {
                     $result[] = sprintf($f->alter(), "first", "");
-                } else if (array_search($item, $keys) == count($keys) - 1) {
+                } else if (array_search($item, $keys, true) === count($keys) - 1) {
                     $result[] = sprintf($f->alter(), "", "");
                 } else {
-                    $result[] = sprintf($f->alter(), "after", $keys[array_search($item, $keys) - 1]);
+                    $result[] = sprintf($f->alter(), "after", $keys[array_search($item, $keys, true) - 1]);
                 }
             }
             return $result;
@@ -126,7 +127,7 @@ final class MTable implements Table
 
     public function __toString()
     {
-        $sql = array_reduce($this->_fields, function ($result, $item) {
+        $sql = array_reduce($this->_fields, static function ($result, $item) {
             if ($result) {
                 $result .= ",\r\n" . $item;
             } else {
@@ -136,17 +137,17 @@ final class MTable implements Table
         }, []);
 
         return implode("\r\n", [
-            sprintf("create table `%s` (", $this->_name),
-            sprintf("%s", $sql),
-            implode(" ", [
-                sprintf(") engine %s", (string)$this->_engine),
-                $this->_comment ? sprintf("comment '%s'", $this->_comment) : "",
-                is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
-                    (string)$this->_charset,
-                    !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
-                ),
-            ]),
-        ]);
+                sprintf("create table `%s` (", $this->_name),
+                sprintf("%s", $sql),
+                implode(" ", [
+                    sprintf(") engine %s", (string)$this->_engine),
+                    $this->_comment ? sprintf("comment '%s'", $this->_comment) : "",
+                    is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
+                        (string)$this->_charset,
+                        !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
+                    ),
+                ]),
+            ]) . ";";
     }
 
     /**
@@ -175,5 +176,14 @@ final class MTable implements Table
     public function dropIfExist(): string
     {
         return sprintf("drop table  if exists %s", $this->_name);
+    }
+
+    // 添加联合索引
+    public function addMultiIndex(Index $index, string $name, string ...$fields): Table
+    {
+        if (count($fields) <= 1) {
+            return $this;
+        }
+        return $this;
     }
 }
