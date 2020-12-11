@@ -157,6 +157,10 @@ final class MTable implements Table {
      * @return Table
      */
     public function addIndex(Index $index, string ...$field): Table {
+        if (empty($field)) {
+            return $this;
+        }
+
         $field = preg_replace('/([a-zA-Z_0-9]+)/', '`$1`', $field);
         if ((string) $index == (string) (MIndex::index())) {
             $index = '';
