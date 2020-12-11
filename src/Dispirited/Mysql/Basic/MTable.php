@@ -12,8 +12,7 @@ use Dispirited\Basic\Index;
 use Dispirited\Basic\Table;
 use Dispirited\Mysql\Factory;
 
-final class MTable implements Table
-{
+final class MTable implements Table {
     /**
      * @var Engine $_engine
      */
@@ -36,72 +35,69 @@ final class MTable implements Table
 
     /**
      * 字符集
+     *
      * @var Charset $_charset
      */
     protected $_charset = null;
+
+    protected $_index = [];
 
     /**
      * @var Collate $_collate
      */
     protected $_collate = null;
 
-    public function __construct(string $name, Engine $engine)
-    {
-        $this->_name = $name;
+    public function __construct(string $name, Engine $engine) {
+        $this->_name   = $name;
         $this->_engine = $engine;
     }
 
     /**
      * @param Field ...$args
+     *
      * @return $this|Table
      */
-    public function addFields(Field ...$args): Table
-    {
+    public function addFields(Field ...$args): Table {
         foreach ($args as $f) {
             $this->_fields[$f->getName()] = $f;
         }
         return $this;
     }
 
-    public function addIdTimestamp(string $id = "id", string $comment = "主键id"): Table
-    {
+    public function addIdTimestamp(string $id = "id", string $comment = "主键id"): Table {
         $this->addFields(
-            Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
-            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+                Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
+                Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+                Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
-    public function addIdDelTimestamp(string $id = "id", string $comment = "主键id"): Table
-    {
+    public function addIdDelTimestamp(string $id = "id", string $comment = "主键id"): Table {
         $this->addFields(
-            Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
-            Factory::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
-            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+                Factory::Int($id, MIndex::primaryKey())->auto()->comment($comment),
+                Factory::TinyInt("is_delete")->length(1)->comment("0未删除 1已删除"),
+                Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+                Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
-    public function addTimestamp(): Table
-    {
+    public function addTimestamp(): Table {
         $this->addFields(
-            Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
-            Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
+                Factory::Datetime("created_at")->default("current_timestamp")->comment("创建时间"),
+                Factory::Datetime("updated_at")->default("current_timestamp")->onUpdate()->comment("创建时间")
         );
         return $this;
     }
 
-    public function comment(string $comment): Table
-    {
+    public function comment(string $comment): Table {
         $this->_comment = $comment;
         return $this;
     }
 
-    public function filter(string ...$args): string
-    {
-        $keys = array_keys($this->_fields);
+    public function filter(string ...$args): string {
+        $keys   = array_keys($this->_fields);
         $result = array_reduce($keys, function ($result, $item) use ($args, $keys) {
             if (!in_array($item, $args, true)) {
                 /**
@@ -125,8 +121,7 @@ final class MTable implements Table
 
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         $sql = array_reduce($this->_fields, static function ($result, $item) {
             if ($result) {
                 $result .= ",\r\n" . $item;
@@ -137,35 +132,55 @@ final class MTable implements Table
         }, []);
 
         return implode("\r\n", [
-                sprintf("create table `%s` (", $this->_name),
-                sprintf("%s", $sql),
-                implode(" ", [
-                    sprintf(") engine %s", (string)$this->_engine),
-                    $this->_comment ? sprintf("comment '%s'", $this->_comment) : "",
-                    is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
-                        (string)$this->_charset,
-                        !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
-                    ),
-                ]),
-            ]) . ";";
+                        sprintf("create table `%s` (", $this->_name),
+                        sprintf("%s", $sql),
+                        !empty($this->_index) ? ',' . implode(",\r\n", $this->_index) : '',
+                        implode(" ", [
+                                sprintf(") engine %s", (string) $this->_engine),
+                                $this->_comment ? sprintf("comment '%s'", $this->_comment) : "",
+                                is_null($this->_charset) ? "" : sprintf("CHARACTER set %s %s",
+                                        (string) $this->_charset,
+                                        !is_null($this->_collate) ? sprintf("COLLATE %s", $this->_collate) : ""
+                                ),
+                        ]),
+                ]) . ";";
+    }
+
+    /**
+     * 添加索引 支持联合索引
+     * author: honelst
+     * DateTime: 2020/12/11 11:10
+     *
+     * @param Index  $index
+     * @param string ...$field
+     *
+     * @return Table
+     */
+    public function addIndex(Index $index, string ...$field): Table {
+        $field = preg_replace('/([a-zA-Z_0-9]+)/', '`$1`', $field);
+        if ((string) $index == (string) (MIndex::index())) {
+            $index = '';
+        }
+        $this->_index[] = sprintf('%s key (%s)', $index, implode(',', $field));
+        return $this;
     }
 
     /**
      * @param Charset $charset
+     *
      * @return Table
      */
-    public function charset(Charset $charset): Table
-    {
+    public function charset(Charset $charset): Table {
         $this->_charset = $charset;
         return $this;
     }
 
     /**
      * @param Collate $collate
+     *
      * @return Table
      */
-    public function collate(Collate $collate): Table
-    {
+    public function collate(Collate $collate): Table {
         $this->_collate = $collate;
         return $this;
     }
@@ -173,14 +188,12 @@ final class MTable implements Table
     /**
      * @return string
      */
-    public function dropIfExist(): string
-    {
+    public function dropIfExist(): string {
         return sprintf("drop table  if exists %s", $this->_name);
     }
 
     // 添加联合索引
-    public function addMultiIndex(Index $index, string $name, string ...$fields): Table
-    {
+    public function addMultiIndex(Index $index, string $name, string ...$fields): Table {
         if (count($fields) <= 1) {
             return $this;
         }

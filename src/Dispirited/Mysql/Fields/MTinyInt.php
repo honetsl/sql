@@ -51,8 +51,8 @@ class MTinyInt extends MField
             sprintf("`%s`", $this->_name),
             // 长度和是否无符号和类型
             sprintf("%s %s",
-                $this->_unsigned && !$this->_zerofill ? "unsigned " : "",
-                $this->_type
+                $this->_type,
+                $this->_unsigned && !$this->_zerofill ? "unsigned " : ""
             ),
             // 是否自动填充0
             $this->_zerofill ? "zerofill" : "",

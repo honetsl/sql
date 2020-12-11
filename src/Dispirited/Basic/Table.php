@@ -4,12 +4,12 @@
 namespace Dispirited\Basic;
 
 
-interface Table
-{
+interface Table {
     public function __construct(string $name, Engine $engine);
 
     /**
      * @param Field ...$field
+     *
      * @return Table
      */
     public function addFields(Field ...$field): Table;
@@ -18,12 +18,14 @@ interface Table
 
     /**
      * @param Charset $charset
+     *
      * @return Table
      */
     public function charset(Charset $charset): Table;
 
     /**
      * @param Collate $collate
+     *
      * @return Table
      */
     public function collate(Collate $collate): Table;
@@ -35,4 +37,6 @@ interface Table
     public function addMultiIndex(Index $index, string $name, string ...$fields): Table;
 
     public function __toString();
+
+    public function addIndex(Index $index, string ...$field): Table;
 }
