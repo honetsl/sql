@@ -7,7 +7,7 @@ use Dispirited\Basic\Engine;
 use Dispirited\Basic\Index;
 
 /**
- * @link https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+ * @link    https://dev.mysql.com/doc/refman/8.0/en/data-types.html
  *
  * @method static \Dispirited\Mysql\Basic\MTable Table(string $name, Engine $engine)
  *
@@ -41,11 +41,17 @@ use Dispirited\Basic\Index;
  * @method static \Dispirited\Mysql\Fields\MTimeStamp TimeStamp(string $name, ?Index $index = null)
  * @method static \Dispirited\Mysql\Fields\MYear Year(string $name, ?Index $index = null)
  *
+ * @method static \Dispirited\Mysql\Fields\MJson Json(string $name)
  * Class Factory
  * @package Dispirited\Mysql
  */
 class Factory
 {
+    public static function __callStatic($name, $arguments)
+    {
+        return self::valid($name, ...$arguments);
+    }
+
     private static function valid(string $method, ...$arguments)
     {
         $class = [
@@ -73,6 +79,7 @@ class Factory
             "time",
             "timestamp",
             "year",
+            "json",
         ];
         if (!in_array(strtolower($method), $class, true)) {
             throw new \RuntimeException(sprintf("class:[%s] not exist!", $method));
@@ -84,11 +91,5 @@ class Factory
         }
         $instance = new \ReflectionClass($fieldClass);
         return $instance->newInstanceArgs($arguments);
-    }
-
-
-    public static function __callStatic($name, $arguments)
-    {
-        return self::valid($name, ...$arguments);
     }
 }

@@ -7,7 +7,7 @@ use Dispirited\Mysql\Basic\MEngine;
 use Dispirited\Mysql\Basic\MIndex;
 use Dispirited\Mysql\Factory;
 
-require "./vendor/autoload.php";
+//require "./vendor/autoload.php";
 echo "<pre>";
 function test()
 {
@@ -30,7 +30,7 @@ function test()
         Factory::Date("created_at")->comment("创建时间")->default("2019-11-11"),
         Factory::Datetime("update_at")->default("current_timestamp")->onUpdate()->comment("更新时间")
     )->comment("用户表")->charset(MCharset::armscii8())->collate(MCollate::armscii8_general_ci());
-    print_r((string)$table);
+    print_r((string) $table);
 }
 
 test();
